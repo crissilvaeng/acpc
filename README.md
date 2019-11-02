@@ -1,4 +1,4 @@
-# ACPC Dealer Server
+# ACPC Server
 
 This [README](README.md) contains information about the server code for the [Annual Computer Poker Competition](http://www.computerpokercompetition.org/).  Please see the [LICENCE](LINCENSE.md) file for information regarding the code's licence.
 
