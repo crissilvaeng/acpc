@@ -1,4 +1,9 @@
 
+# Custom
+
+# Output directory
+out/
+
 # Created by https://www.gitignore.io/api/c,vim,osx,cmake,linux,emacs,windows,sublimetext,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=c,vim,osx,cmake,linux,emacs,windows,sublimetext,visualstudiocode
 

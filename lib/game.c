@@ -12,7 +12,7 @@ Copyright (C) 2011 by the Computer Poker Research Group, University of Alberta
 #include "game.h"
 #include "rng.h"
 
-#include "evalHandTables"
+#include "eval_hands_table.h"
 
 
 static enum ActionType charToAction[ 256 ] = {
