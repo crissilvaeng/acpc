@@ -90,7 +90,7 @@ ssize_t getLine( ReadBuf *readBuf,
 	FD_SET( readBuf->fd, &fds );
 	if( select( readBuf->fd + 1, &fds, NULL, NULL, &tv ) < 1 ) {
 	  /* no input ready within time, or an actual error */
-	
+
 	  return -1;
 	}
       }
@@ -164,6 +164,7 @@ int getListenSocket( uint16_t *desiredPort )
 {
   int sock, t;
   struct sockaddr_in addr;
+  socklen_t len;
 
   if( ( sock = socket( AF_INET, SOCK_STREAM, 0 ) ) < 0 ) {
 
@@ -186,26 +187,23 @@ int getListenSocket( uint16_t *desiredPort )
     }
   } else {
 
-    t = 0;
-    while( 1 ) {
-      addr.sin_family = AF_INET;
-      *desiredPort = ( random() % 64512 ) + 1024;
-      addr.sin_port = htons( *desiredPort );
-      addr.sin_addr.s_addr = htonl( INADDR_ANY );
-      if( bind( sock, (struct sockaddr *)&addr, sizeof( addr ) ) < 0 ) {
+    addr.sin_family = AF_INET;
+    *desiredPort = 0;
+    addr.sin_port = htons( *desiredPort );
+    addr.sin_addr.s_addr = htonl( INADDR_ANY );
 
-	if( t < NUM_PORT_CREATION_ATTEMPTS ) {
+    if( bind( sock, (struct sockaddr *)&addr, sizeof( addr ) ) < 0 ) {
 
-	  ++t;
-	  continue;
-	} else {
-
-	  return -1;
-	}
-      }
-
-      break;
+      return -1;
     }
+
+    len = sizeof(addr);
+    if( getsockname( sock, (struct sockaddr *)&addr, &len ) == -1 ) {
+
+      return -1;
+    }
+
+    *desiredPort = ntohs( addr.sin_port );
   }
 
   /* listen on the socket */
